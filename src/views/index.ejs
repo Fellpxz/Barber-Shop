@@ -1,152 +1,220 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Barber Shop</title>
-    <link rel="icon" href="assets/img/Logo2-NoBackground.ico">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-</head>
-<body>
+    <link rel="icon" href="assets/img/Logo2-NoBackground.ico" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+  </head>
+  <body>
     <!-- SALDO -->
     <div id="mostrar-saldo">
-        <p>Saldo:</p>
-        <p>|</p>
-        <% if (lastCard.length > 0) { %>
-            <p><%= lastCard[0].saldo %> Reais</p>
-        <% } else { %>
-            <p>0</p>
-        <% } %>
+      <p>Saldo:</p>
+      <p>|</p>
+      <% if (saldo > 0) { %>
+      <p><%= saldo %> Reais</p>
+      <% } else { %>
+      <p>0</p>
+      <% } %>
     </div>
 
-  <form action="/cards" method="post" accept-charset="UTF-8">
-    <input type="number" name="saldo" id="saldo" value="131">
-    <button type="submit"></button>
-  </form>
-      
-    
+    <div id="criar-cartao">
+      <h3>Você está criando o cartão</h3>
+      <form action="/cards" method="post" accept-charset="UTF-8">
+        <p>Adcione seu saldo</p>
+        <input type="number" name="saldo" id="saldo" />
+        <button type="submit">Criar cartão</button>
+      </form>
+    </div>
+
     <!--CABEÇALHO PRINCIPAL-->
     <header id="main-header">
-    <div class="container">
-            <div class="logo-box">
-                <img src="./assets/img/Logo2-NoBackground.png" alt="">
-                <h1>Barber Shop</h1>
-            </div>
-        <div class="right">            
-        <nav class="main-nav">
+      <div class="container">
+        <div class="logo-box">
+          <img src="./assets/img/Logo2-NoBackground.png" alt="" />
+          <h1>Barber Shop</h1>
+        </div>
+        <div class="right">
+          <nav class="main-nav">
             <ul>
-                <li><a href="#">HOME</a></li>
-                <li><a href="#">SERVIÇOS</a></li>
-                <li><a href="#">PRODUTOS</a></li>
-                <li><a href="#">GALERIA</a></li>
-                <li><a href="#">SOBRE NÓS</a></li>
+              <li><a href="#">HOME</a></li>
+              <li><a href="#">SERVIÇOS</a></li>
+              <li><a href="#">PRODUTOS</a></li>
+              <li><a href="#">GALERIA</a></li>
+              <li><a href="#">SOBRE NÓS</a></li>
             </ul>
-        </nav>
-        <div class="holder">
+          </nav>
+          <div class="holder">
             <a href="#"><i class="fa-solid fa-cart-shopping"></i></a>
             <a href="#"><i class="fa-solid fa-scissors"></i></a>
-            <a href="#"><i class="fa-regular fa-credit-card"></i></a>
+            <a href="#" id="toggle-credit-card"
+              ><i class="fa-regular fa-credit-card"></i
+            ></a>
+          </div>
         </div>
-        </div>
-    </div>
+      </div>
     </header>
 
     <!--HOME SECTION-->
     <section id="home">
-        <div class="container">
-            <div class="side-a">
-                <header>
-                    <h1>ENCONTRE</h1>
-                    <h1>SEU ESTILO</h1>
-                    <h1>E SEJA ÚNICO</h1>
-                </header>
-                <div class="content">
-                    <img src="./assets/img/instruments-used-latino-hair-salon2.jpg" alt="">
-                </div>
-            </div>
-            <div class="side-b">
-                <header>
-                    <h2>HAIR STYLIST</h2>
-                    <h1>DERRICK  JONES</h1>
-                </header>
-                <div class="photo-holder">
-                    <img src="./assets/img/Derrick Jones.jpg" alt="">
-                </div>
-            </div>
-            <div class="side-c">
-            <div class="reposition">
-                <header>
-                    <img src="./assets/img/1239-removebg-preview.png" alt="">
-                    <ul>
-                        <li>Serviços de Salão</li>
-                        <li>- Barbearia</li>
-                        <li>Produtos </li>
-                    </ul>
-                </header>
-                <div class="content">
-                    <img src="./assets/img/instruments-used-latino-hair-salon.jpg" alt="">
-                    <div class="text-holder">
-                        <p>Nossa especialidade</p>
-                        <p>Cortes de cabelo</p>
-                    </div>
-                    <a href="#">Contrate um serviço <i>|</i><i class="fa-solid fa-arrow-right"></i></a>
-                </div>
-            </div>
-            </div>
+      <div class="container">
+        <div class="side-a">
+          <header>
+            <h1>ENCONTRE</h1>
+            <h1>SEU ESTILO</h1>
+            <h1>E SEJA ÚNICO</h1>
+          </header>
+          <div class="content">
+            <img
+              src="./assets/img/instruments-used-latino-hair-salon2.jpg"
+              alt=""
+            />
+          </div>
         </div>
+        <div class="side-b">
+          <header>
+            <h2>HAIR STYLIST</h2>
+            <h1>DERRICK JONES</h1>
+          </header>
+          <div class="photo-holder">
+            <img src="./assets/img/Derrick Jones.jpg" alt="" />
+          </div>
+        </div>
+        <div class="side-c">
+          <div class="reposition">
+            <header>
+              <img src="./assets/img/1239-removebg-preview.png" alt="" />
+              <ul>
+                <li>Serviços de Salão</li>
+                <li>- Barbearia</li>
+                <li>Produtos</li>
+              </ul>
+            </header>
+            <div class="content">
+              <img
+                src="./assets/img/instruments-used-latino-hair-salon.jpg"
+                alt=""
+              />
+              <div class="text-holder">
+                <p>Nossa especialidade</p>
+                <p>Cortes de cabelo</p>
+              </div>
+              <a href="#services"
+                >Contrate um serviço <i>|</i
+                ><i class="fa-solid fa-arrow-right"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!--SERVIÇOS SECTION-->
     <section id="services">
-        <div class="container">
+      <div class="container">
+        <header>
+          <h2>Nossos Serviços</h2>
+          <h1>Muito mais que apenas cortar um cabelo</h1>
+          <img
+            src="./assets/img/490619-PHD570-448-removebg-preview.png"
+            alt=""
+          />
+          <p>
+            Descubra a excelência em cuidados masculinos com nossa gama de
+            serviços especializados, desde cortes clássicos até tratamentos de
+            barba e relaxantes barbearias tradicionais. Deixe-nos elevar o seu
+            estilo e confiança.
+          </p>
+        </header>
+        <div class="content">
+          <div class="service-card">
             <header>
-                <h2>Nossos Serviços</h2>
-                <h1>Muito mais que apenas cortar um cabelo</h1>
-                <img src="./assets/img/490619-PHD570-448-removebg-preview.png" alt="">
-                <p>Descubra a excelência em cuidados masculinos com nossa gama de serviços especializados, desde cortes clássicos até tratamentos de barba e relaxantes barbearias tradicionais. Deixe-nos elevar o seu estilo e confiança.</p>
+              <i class="fa-solid fa-scissors"></i>
+              <h1>CABELO CLÁSSICO</h1>
             </header>
             <div class="content">
-                <div class="service-card">
-                    <header>
-                        <i class="fa-solid fa-scissors"></i>
-                        <h1>CABELO CLÁSSICO</h1>
-                    </header>
-                    <div class="content">
-                        <p>Desfrute de um corte de cabelo clássico e atemporal que realça sua aparência e estilo pessoal. Nossos barbeiros especializados estão prontos para criar o corte perfeito que combina com você, desde cortes curtos e nítidos até penteados vintage elegantes. Transforme seu visual com o toque de nossos profissionais.</p>
-                        <h3>R$: 50</h3>
-                    </div>
-                    <a href="#">COMPRAR SERVIÇO <i>|</i><i class="fa-solid fa-arrow-right"></i></a>
-                </div>
-
-                <div class="service-card">
-                    <header>
-                        <img class="img-1" src="./assets/img/Beard_ICO-removebg-preview.png" alt="">
-                        <h1>BARBEARIA TRADICIONAL</h1>
-                    </header>
-                    <div class="content">
-                        <p class="text-1">Experimente a autêntica arte do barbear com nosso serviço de barbearia tradicional. Nossos barbeiros habilidosos utilizam navalhas afiadas e técnicas tradicionais para proporcionar um barbear suave e preciso. Deixe-se mimar com uma experiência que remete a um tempo de elegância e masculinidade.</p>
-                        <h3>R$: 40</h3>
-                    </div>
-                    <a href="#">COMPRAR SERVIÇO <i>|</i><i class="fa-solid fa-arrow-right"></i></a>
-                </div>
-
-                <div class="service-card">
-                    <header>
-                        <img class="img-2" src="./assets/img/Beard_ICO2-removebg-preview.png" alt="">
-                        <h1>TRATAMENTO BARBA & BIGODE</h1>
-                    </header>
-                    <div class="content">
-                        <p>Mantenha sua barba e bigode impecáveis com nossos tratamentos personalizados. Oferecemos serviços de modelagem, aparagem, lavagem e hidratação para garantir que sua barba esteja sempre em sua melhor forma. Nossos produtos de alta qualidade e atenção aos detalhes ajudam a realçar seu charme masculino.</p>
-                        <h3>R$: 40</h3>
-                    </div>
-                    <a href="#">COMPRAR SERVIÇO <i>|</i><i class="fa-solid fa-arrow-right"></i></a>
-                </div>
+              <p>
+                Desfrute de um corte de cabelo clássico e atemporal que realça
+                sua aparência e estilo pessoal. Nossos barbeiros especializados
+                estão prontos para criar o corte perfeito que combina com você,
+                desde cortes curtos e nítidos até penteados vintage elegantes.
+                Transforme seu visual com o toque de nossos profissionais.
+              </p>
+              <h3>R$: <%= services[0].preco %></h3>
             </div>
+            <a
+              href=""
+              class="buy-service"
+              data-service-id="1"
+              onclick="comprarServico(1)"
+              >COMPRAR SERVIÇO <i>|</i><i class="fa-solid fa-arrow-right"></i
+            ></a>
+          </div>
+
+          <div class="service-card">
+            <header>
+              <img
+                class="img-1"
+                src="./assets/img/Beard_ICO-removebg-preview.png"
+                alt=""
+              />
+              <h1>BARBEARIA TRADICIONAL</h1>
+            </header>
+            <div class="content">
+              <p class="text-1">
+                Experimente a autêntica arte do barbear com nosso serviço de
+                barbearia tradicional. Nossos barbeiros habilidosos utilizam
+                navalhas afiadas e técnicas tradicionais para proporcionar um
+                barbear suave e preciso. Deixe-se mimar com uma experiência que
+                remete a um tempo de elegância e masculinidade.
+              </p>
+              <h3>R$: <%= services[1].preco %></h3>
+            </div>
+            <a
+              href=""
+              class="buy-service"
+              data-service-id="2"
+              onclick="comprarServico(2)"
+              >COMPRAR SERVIÇO <i>|</i><i class="fa-solid fa-arrow-right"></i
+            ></a>
+          </div>
+
+          <div class="service-card">
+            <header>
+              <img
+                class="img-2"
+                src="./assets/img/Beard_ICO2-removebg-preview.png"
+                alt=""
+              />
+              <h1>TRATAMENTO BARBA & BIGODE</h1>
+            </header>
+            <div class="content">
+              <p>
+                Mantenha sua barba e bigode impecáveis com nossos tratamentos
+                personalizados. Oferecemos serviços de modelagem, aparagem,
+                lavagem e hidratação para garantir que sua barba esteja sempre
+                em sua melhor forma. Nossos produtos de alta qualidade e atenção
+                aos detalhes ajudam a realçar seu charme masculino.
+              </p>
+              <h3>R$: <%= services[2].preco %></h3>
+            </div>
+            <a
+              class="buy-service"
+              data-service-id="3"
+              onclick="comprarServico(3)"
+              >COMPRAR SERVIÇO <i>|</i><i class="fa-solid fa-arrow-right"></i
+            ></a>
+          </div>
         </div>
+      </div>
     </section>
 
     <script src="js/script.js"></script>
     <!--FONT AWESOME-->
-    <script src="https://kit.fontawesome.com/e2963f2415.js" crossorigin="anonymous"></script>
-</body>
+    <script
+      src="https://kit.fontawesome.com/e2963f2415.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>
