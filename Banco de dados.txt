@@ -1,0 +1,32 @@
+CREATE TABLE cartoes (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  codigo VARCHAR(4) NOT NULL,
+  saldo DECIMAL(10, 2) NOT NULL
+);
+
+
+CREATE TABLE services (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    preco DECIMAL(10, 2),
+    tipo VARCHAR(255)
+);
+
+INSERT INTO services (preco, tipo) VALUES (50, 'Cabelo Clássico');
+
+INSERT INTO services (preco, tipo) VALUES (40, 'Barba Tradicional');
+
+INSERT INTO services (preco, tipo) VALUES (40, 'Tratamento');
+
+CREATE TABLE carrinho (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  tipo ENUM('Produto', 'Serviço') NOT NULL,
+  nome VARCHAR(255) NOT NULL,
+  preco DECIMAL(10, 2) NOT NULL
+);
+
+CREATE TABLE utilizaveis (
+  ID INT AUTO_INCREMENT PRIMARY KEY,
+  Nome VARCHAR(255) NOT NULL,
+  Tipo ENUM('Serviço', 'Recompensa') NOT NULL,
+  Data TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

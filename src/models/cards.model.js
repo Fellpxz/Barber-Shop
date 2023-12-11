@@ -2,23 +2,20 @@ const connectToDatabase = require("../database/connect");
 
 //----------------------------------------------------------------------------------
 
-// Função para criar um novo cartão
-async function createCard(saldo) {
-  const connection = await connectToDatabase(); // Conecta ao banco de dados
+async function createCard(saldo, codigo) {
+  const connection = await connectToDatabase();
 
-  // Substitui valores indefinidos por nulos
-  if (saldo === undefined) {
-    saldo = null;
+  if (saldo === undefined || codigo === undefined) {
+    return null; // Ou você pode lançar um erro ou lidar de outra forma
   }
 
-  // Insere um novo registro na tabela 'cartoes' com o saldo fornecido
   const [rows] = await connection.execute(
-    "INSERT INTO cartoes (saldo) VALUES (?)",
-    [saldo]
+    "INSERT INTO cartoes (saldo, codigo) VALUES (?, ?)",
+    [saldo, codigo]
   );
 
-  await connection.end(); // Encerra a conexão com o banco de dados
-  return rows.insertId; // Retorna o ID do novo cartão
+  await connection.end();
+  return rows.insertId;
 }
 
 //----------------------------------------------------------------------------------
@@ -53,6 +50,19 @@ async function getSaldoOfLastId() {
 
 //----------------------------------------------------------------------------------
 
+async function getLastCard() {
+  const connection = await connectToDatabase();
+
+  const [rows] = await connection.execute(
+    "SELECT * FROM cartoes ORDER BY id DESC LIMIT 1"
+  );
+
+  await connection.end();
+  return rows;
+}
+
+//----------------------------------------------------------------------------------
+
 async function updateSaldo(novoSaldo) {
   const connection = await connectToDatabase();
 
@@ -80,10 +90,43 @@ async function updateSaldo(novoSaldo) {
 
 //----------------------------------------------------------------------------------
 
+// Função para adicionar saldo ao cartão pelo código
+async function addSaldoByCodigo(codigo, saldo) {
+  const connection = await connectToDatabase();
+
+  const [rows] = await connection.execute(
+    "UPDATE cartoes SET saldo = saldo + ? WHERE codigo = ?",
+    [saldo, codigo]
+  );
+
+  await connection.end();
+  return rows.affectedRows; // Retorna o número de linhas afetadas (deve ser 1 se o código existir)
+}
+
+//----------------------------------------------------------------------------------
+
+// Função para excluir cartão pelo código
+async function deleteCardByCodigo(codigo) {
+  const connection = await connectToDatabase();
+
+  const [rows] = await connection.execute(
+    "DELETE FROM cartoes WHERE codigo = ?",
+    [codigo]
+  );
+
+  await connection.end();
+  return rows.affectedRows; // Retorna o número de linhas afetadas (deve ser 1 se o código existir)
+}
+
+//----------------------------------------------------------------------------------
+
 // Exporta as funções para serem usadas em outros lugares
 module.exports = {
   createCard,
   getCards,
   getSaldoOfLastId,
   updateSaldo,
+  getLastCard,
+  addSaldoByCodigo,
+  deleteCardByCodigo,
 };

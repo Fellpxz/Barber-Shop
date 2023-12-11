@@ -1,5 +1,4 @@
-// MOSTRAR CARTÃO!
-
+// Mostrar e Ocultar / Cartão!
 const toggleButton = document.getElementById("toggle-credit-card");
 const criarCartao = document.getElementById("criar-cartao");
 
@@ -14,26 +13,90 @@ toggleButton.addEventListener("click", () => {
   isCreditCardFormVisible = !isCreditCardFormVisible;
 });
 
-// FETCH DATA!
+// Mostrar e Ocultar / Carrinho!
+const toggleCartButton = document.getElementById("toggle-cart");
+const carrinho = document.getElementById("carrinho");
 
-async function comprarServico(serviceId) {
+let isCartVisible = false;
+
+toggleCartButton.addEventListener("click", () => {
+  if (isCartVisible) {
+    carrinho.style.display = "none";
+  } else {
+    carrinho.style.display = "flex";
+  }
+  isCartVisible = !isCartVisible;
+});
+
+// Mostrar e Ocultar / Usable
+const toggleUsableButton = document.getElementById("toggle-usable");
+const usable = document.getElementById("utilizaveis");
+
+let isUsableVisible = false;
+
+toggleUsableButton.addEventListener("click", () => {
+  if (isUsableVisible) {
+    usable.style.display = "none";
+  } else {
+    usable.style.display = "flex";
+  }
+  isUsableVisible = !isUsableVisible;
+});
+
+// POST REQUEST:
+// CONFIMAR COMPRA!
+async function confirmarCompra() {
   try {
-    const response = await fetch(`/comprar-servico/${serviceId}`, {
+    const response = await fetch("/comprar-carrinho", {
       method: "POST",
     });
 
-    if (response.status === 200) {
-      // Atualizar a interface do usuário após a compra bem-sucedida
-      const data = await response.json();
-      // Atualizar o saldo na interface do usuário
-      const saldoElement = document.getElementById("saldo");
-      if (saldoElement) {
-        saldoElement.innerText = `${data.saldo} Reais`;
-      }
+    if (response.ok) {
+      // A lógica adicional após uma resposta bem-sucedida, se necessário
+      console.log("Compra confirmada com sucesso!");
+      alert("Compra efetuada com sucesso!");
+      // Recarrega a página após o alerta ser fechado
+      window.location.reload();
     } else {
-      throw new Error(`Erro na solicitação: ${response.status}`);
+      const errorData = await response.json();
+      if (errorData.error === "Saldo insuficiente") {
+        // Exibe um alerta se o erro for de saldo insuficiente
+        alert("Saldo insuficiente. Não é possível concluir a compra.");
+      } else {
+        throw new Error(`Erro na solicitação: ${response.status}`);
+      }
     }
   } catch (error) {
     console.error(error);
   }
 }
+
+// DELETAR ITEM!
+document.addEventListener("DOMContentLoaded", () => {
+  const utilizarButtons = document.querySelectorAll(".utilizar-btn");
+
+  utilizarButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const utilizavelId = button.getAttribute("data-id");
+      utilizarItem(utilizavelId);
+    });
+  });
+
+  async function utilizarItem(id) {
+    try {
+      const response = await fetch(`/utilizaveis/${id}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        alert("UTILIZADO COM SUCESSO!");
+        location.reload(); // Recarrega a página
+      } else {
+        const errorData = await response.json();
+        console.error(`Erro ao utilizar item: ${errorData.error}`);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+});

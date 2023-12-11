@@ -65,6 +65,12 @@ a {
   z-index: 3;
 }
 
+#criar-cartao .holder {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 #criar-cartao form {
   display: flex;
   flex-direction: column;
@@ -125,6 +131,133 @@ a {
   position: relative;
   bottom: 0.5rem;
   font-size: 2.4rem;
+}
+
+/*-- ADD CART --*/
+
+#add-cart {
+  display: flex;
+  flex-direction: column;
+}
+
+#add-cart input {
+  display: none;
+}
+
+#add-cart button {
+  margin-top: 5rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem 3rem;
+  border: 1px solid black;
+  color: white;
+  letter-spacing: 0.2rem;
+  background-color: #151410;
+  font-size: 1.4rem;
+  font-family: "nouveau", sans-serif;
+}
+
+/*-- CART --*/
+#carrinho {
+  position: fixed;
+  display: none;
+  flex-direction: column;
+  background-color: #151410;
+  padding: 2rem 3rem;
+  color: rgb(230, 223, 223);
+
+  bottom: 30%;
+  z-index: 15;
+}
+
+#carrinho header {
+  padding-bottom: 3rem;
+}
+
+#carrinho h3 {
+  font-weight: 400;
+  font-size: 1.8rem;
+  text-decoration: underline;
+}
+
+#carrinho .holder {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 3rem;
+}
+
+#carrinho .holder .cart-item {
+  display: flex;
+  gap: 1rem;
+  padding-bottom: 1rem;
+}
+
+#carrinho .holder .cart-item p {
+  font-size: 1.4rem;
+}
+
+#carrinho button {
+  margin-top: 5rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem 3rem;
+  border: 1px solid black;
+  color: white;
+  letter-spacing: 0.2rem;
+  background-color: #151410;
+  font-size: 1.4rem;
+  font-family: "nouveau", sans-serif;
+}
+
+#utilizaveis {
+  display: none;
+  flex-direction: column;
+  position: fixed;
+  background-color: #151410;
+  padding: 2rem 3rem;
+  color: rgb(230, 223, 223);
+  bottom: 50%;
+}
+
+#utilizaveis header {
+  padding-bottom: 3rem;
+}
+
+#utilizaveis header h3 {
+  font-weight: 400;
+  font-size: 1.8rem;
+  text-decoration: underline;
+}
+
+#utilizaveis .holder {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+#utilizaveis .holder .utilizavel-item {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+#utilizaveis .holder .utilizavel-item button {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem 3rem;
+  border: 1px solid black;
+  color: white;
+  letter-spacing: 0.2rem;
+  background-color: #151410;
+  font-size: 1.4rem;
+  font-family: "nouveau", sans-serif;
+}
+
+#utilizaveis .holder p {
+  font-size: 1.4rem;
 }
 
 /*-- CONFIGURAÇÔES HEADER --*/
@@ -402,7 +535,7 @@ a {
   width: 33%;
 }
 
-/*--CONFIGURAÇÔES DO SERVIÇOS - CARDS DE SERVIÇOS - HEADER--*/
+/*--CONFIGURAÇÔES DO SERVIÇOS - CARDS DE SERVIÇOS - CABEÇALHO--*/
 #services .container .content .service-card header {
   display: flex;
   flex-direction: row;
@@ -447,6 +580,8 @@ a {
   font-size: 1.6rem;
   position: relative;
 }
+
+/*-- H3 --*/
 
 #services .container .content .service-card .content h3 {
   font-size: 2rem;

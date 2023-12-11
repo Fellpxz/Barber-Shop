@@ -19,13 +19,87 @@
       <% } %>
     </div>
 
+    <!-- CRIAR CARTÃO -->
     <div id="criar-cartao">
+      <% if (lastCard.length > 0) { %>
+      <h3>Operações com o cartão</h3>
+      <div class="holder">
+        <form action="/add-saldo" method="post" accept-charset="UTF-8">
+          <input
+            type="hidden"
+            name="codigo"
+            value="<%= lastCard[0].codigo %>"
+          />
+          <p>Adicionar saldo:</p>
+          <input type="number" name="saldo" id="saldo" required />
+          <button type="submit">Adicionar Saldo</button>
+        </form>
+        <form action="/delete-card" method="post" accept-charset="UTF-8">
+          <input
+            type="hidden"
+            name="codigo"
+            value="<%= lastCard[0].codigo %>"
+          />
+          <button type="submit">Excluir Cartão</button>
+        </form>
+      </div>
+      <% } else { %>
+      <!-- Se não houver registros -->
       <h3>Você está criando o cartão</h3>
+      <!--FORMS-->
       <form action="/cards" method="post" accept-charset="UTF-8">
-        <p>Adcione seu saldo</p>
+        <p>Adicione o código de 4 dígitos do seu cartão</p>
+        <input type="text" name="codigo" id="codigo" />
+        <p>Adicione seu saldo</p>
         <input type="number" name="saldo" id="saldo" />
         <button type="submit">Criar cartão</button>
       </form>
+      <% } %>
+    </div>
+
+    <!-- CART -->+
+    <div id="carrinho">
+      <header>
+        <h3>Carrinho de Compras:</h3>
+      </header>
+      <div class="holder">
+        <% if (cartItems.length > 0) { %> <% cartItems.forEach(item => { %>
+        <div class="cart-item">
+          <p>Nome: <%= item.nome %></p>
+          <p>Preço: <%= item.preco %></p>
+          <p>Tipo: <%= item.tipo %></p>
+          <!-- Adicione mais informações do item conforme necessário -->
+        </div>
+        <% }); %> <% } else { %>
+        <p>O carrinho está vazio.</p>
+        <% } %>
+      </div>
+      <h3>
+        Total: <%= typeof total === 'number' ? total.toFixed(2) : 'Indefinido'
+        %>
+      </h3>
+      <button onclick="confirmarCompra()">Comprar</button>
+    </div>
+
+    <!-- Utilizaveis -->
+    <div id="utilizaveis">
+      <header>
+        <h3>Serviços e Recompensas</h3>
+      </header>
+      <div class="holder">
+        <% if (usableItems.length > 0) { %> <% usableItems.forEach(item => { %>
+        <div class="utilizavel-item">
+          <p>Nome: <%= item.Nome %></p>
+          <p>Tipo: <%= item.Tipo %></p>
+          <!-- Adicione mais informações do item conforme necessário -->
+          <button class="utilizar-btn" data-id="<%= item.ID %>">
+            Utilizar
+          </button>
+        </div>
+        <% }); %> <% } else { %>
+        <p>Não há serviços ou recompensas disponíveis.</p>
+        <% } %>
+      </div>
     </div>
 
     <!--CABEÇALHO PRINCIPAL-->
@@ -46,8 +120,12 @@
             </ul>
           </nav>
           <div class="holder">
-            <a href="#"><i class="fa-solid fa-cart-shopping"></i></a>
-            <a href="#"><i class="fa-solid fa-scissors"></i></a>
+            <a href="#" id="toggle-cart"
+              ><i class="fa-solid fa-cart-shopping"></i
+            ></a>
+            <a href="#" id="toggle-usable"
+              ><i class="fa-solid fa-scissors"></i
+            ></a>
             <a href="#" id="toggle-credit-card"
               ><i class="fa-regular fa-credit-card"></i
             ></a>
@@ -128,6 +206,8 @@
           </p>
         </header>
         <div class="content">
+          <!-- SERVIÇO 1 -->
+
           <div class="service-card">
             <header>
               <i class="fa-solid fa-scissors"></i>
@@ -143,14 +223,24 @@
               </p>
               <h3>R$: <%= services[0].preco %></h3>
             </div>
-            <a
-              href=""
-              class="buy-service"
-              data-service-id="1"
-              onclick="comprarServico(1)"
-              >COMPRAR SERVIÇO <i>|</i><i class="fa-solid fa-arrow-right"></i
-            ></a>
+            <form id="add-cart" action="/add-to-cart" method="post">
+              <input type="text" name="tipo" value="Serviço" required />
+              <input type="text" name="nome" value="Cabelo Clássico" required />
+              <input
+                type="number"
+                name="preco"
+                value="50.00"
+                step="0.01"
+                required
+              />
+              <button type="submit">
+                Adcionar ao Carrinho <i>|</i
+                ><i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </form>
           </div>
+
+          <!-- SERVIÇO 2 -->
 
           <div class="service-card">
             <header>
@@ -171,14 +261,29 @@
               </p>
               <h3>R$: <%= services[1].preco %></h3>
             </div>
-            <a
-              href=""
-              class="buy-service"
-              data-service-id="2"
-              onclick="comprarServico(2)"
-              >COMPRAR SERVIÇO <i>|</i><i class="fa-solid fa-arrow-right"></i
-            ></a>
+            <form id="add-cart" action="/add-to-cart" method="post">
+              <input type="text" name="tipo" value="Serviço" required />
+              <input
+                type="text"
+                name="nome"
+                value="Barbearia Tradicional"
+                required
+              />
+              <input
+                type="number"
+                name="preco"
+                value="50.00"
+                step="0.01"
+                required
+              />
+              <button type="submit">
+                Adcionar ao Carrinho <i>|</i
+                ><i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </form>
           </div>
+
+          <!-- SERVIÇO 3 -->
 
           <div class="service-card">
             <header>
@@ -199,12 +304,26 @@
               </p>
               <h3>R$: <%= services[2].preco %></h3>
             </div>
-            <a
-              class="buy-service"
-              data-service-id="3"
-              onclick="comprarServico(3)"
-              >COMPRAR SERVIÇO <i>|</i><i class="fa-solid fa-arrow-right"></i
-            ></a>
+            <form id="add-cart" action="/add-to-cart" method="post">
+              <input type="text" name="tipo" value="Serviço" required />
+              <input
+                type="text"
+                name="nome"
+                value="Tratamento Barba & Bigode"
+                required
+              />
+              <input
+                type="number"
+                name="preco"
+                value="40.00"
+                step="0.01"
+                required
+              />
+              <button type="submit">
+                Adcionar ao Carrinho <i>|</i
+                ><i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </form>
           </div>
         </div>
       </div>
